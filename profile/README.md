@@ -2,7 +2,7 @@
 
 > *Nothing is ever truly erased.*
 
-**Palimpsest** is an open-source investigative research engine. It combines persistent memory, unified search across communication channels, platform APIs, web research, and LLM synthesis to build dossiers from fragments.
+Open-source infrastructure for investigative research. A toolkit that gives journalists and researchers the same persistent intelligence capabilities that institutions have had for decades.
 
 ---
 
@@ -10,34 +10,71 @@
 
 A palimpsest is a manuscript where the original text has been scraped away and overwritten — but the ghost of the first layer remains, recoverable to those who know how to look.
 
-The tool works the same way. It searches what's visible, then reaches deeper: deleted pages in the Wayback Machine, buried conversations in chat logs, forgotten connections in commit histories. Every finding is a layer. The truth is in the traces.
+The toolkit works the same way. It searches what's visible, reaches deeper, and preserves what it finds — so nothing fades just because time passed or a page was deleted.
 
 ---
 
-## What it does
+## The toolkit
 
-- **Unified search** — query across chat logs, meeting transcripts, session history, and command history in a single operation
-- **Platform intelligence** — GitHub, GitLab, Jira/Confluence, Wayback Machine, public social profiles
-- **Web research** — web search with source attribution, domain WHOIS, company registries, Wayback reconstruction
-- **Persistent memory** — knowledge graph across sessions (people, events, findings, timelines, sources) with automatic relation mapping
-- **LLM synthesis** — connects dots across data sources, identifies patterns, highlights gaps, suggests next lines of inquiry
-- **Output** — structured dossiers, network maps, timelines, source indices with provenance and confidence ratings
+Seven repositories, one integrated pipeline:
+
+### Core
+
+| Repo | Description |
+|---|---|
+| **[palimpsest](https://github.com/palimpsest-labs/palimpsest)** | Research engine — local-first, source-tracked, methodology-enforced |
+
+### Search & Memory
+
+| Repo | Description |
+|---|---|
+| **[unified-history-mcp](https://github.com/palimpsest-labs/unified-history-mcp)** | Cross-domain full-text search across sessions, transcripts, notifications, and web archives |
+| **[fst-indexer](https://github.com/palimpsest-labs/fst-indexer)** | Blazing-fast FST full-text search indexer (Rust) — the search engine underneath it all |
+| **[graph-gardener](https://github.com/palimpsest-labs/graph-gardener)** | LLM-powered knowledge graph maintenance — cleans, enriches, and deduplicates |
+
+### Archiving & Execution
+
+| Repo | Description |
+|---|---|
+| **[web-archive-mcp](https://github.com/palimpsest-labs/web-archive-mcp)** | Persistent web fetch/search archiving — every result saved and indexed forever |
+| **[shell-sandbox-mcp](https://github.com/palimpsest-labs/shell-sandbox-mcp)** | Safe shell command execution via pledge()+unveil() — vendored busybox, cosmo-compiled sandbox |
+
+### Utilities
+
+| Repo | Description |
+|---|---|
+| **[vibe-summarizer](https://github.com/palimpsest-labs/vibe-summarizer)** | LLM-powered session and transcript summarizer — provider-agnostic |
+
+---
+
+## How they connect
+
+```
+shell-sandbox-mcp ──► pledge()+unveil() ──► busybox applets
+web-archive-mcp   ──► web_fetch/search   ──► JSONL archive
+                          │                      │
+                          ▼                      ▼
+                    fst-indexer ◄──────── unified-history-mcp
+                          │                      │
+                          ▼                      ▼
+                    graph-gardener          search across all
+                          │                 domains at once
+                          ▼
+                    memory graph
+```
 
 ---
 
 ## Design principles
 
-- **Non-technical UX** — a journalist types "investigate X" and gets results
 - **Local-first** — all data stored locally; sensitive investigations never touch the cloud
-- **Offline-capable** — no dependency on external services for core operation
-- **Source provenance** — every finding traces back to its origin
-- **Confidence grading** — confirmed → circumstantial → speculative
-- **Model-agnostic** — works with any LLM provider
+- **Methodology-enforced** — source provenance, confidence grading, correction logging
+- **Self-auditing** — false-positive correction loops, transparent methodology
+- **Open source** — no institutional gatekeepers, no licenses, no clearance required
+- **Compounding** — the system gets more valuable the longer you use it
 
 ---
 
 ## Status
 
-Palimpsest is in early design. We're building the foundation.
-
-[palimpsest-labs](https://github.com/palimpsest-labs)
+Seven repos, all functional, actively developed. The foundation is built. Now we integrate.
