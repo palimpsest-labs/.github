@@ -28,31 +28,26 @@ The tool works the same way. It searches what's visible, then reaches deeper: de
 
 ## The toolkit
 
-Seven repositories, one integrated pipeline:
+Seven repositories, three layers:
 
-| Repo | Role |
-|---|---|
-| **[palimpsest](https://github.com/palimpsest-labs/palimpsest)** | Research engine — local-first, source-tracked, methodology-enforced |
-| **[unified-history-mcp](https://github.com/palimpsest-labs/unified-history-mcp)** | Cross-domain search across sessions, transcripts, notifications, and web archives |
-| **[fst-indexer](https://github.com/palimpsest-labs/fst-indexer)** | Blazing-fast FST full-text search indexer (Rust) — powers unified-history-mcp |
-| **[web-archive-mcp](https://github.com/palimpsest-labs/web-archive-mcp)** | Persistent web fetch/search archiving — every result saved and indexed forever |
-| **[shell-sandbox-mcp](https://github.com/palimpsest-labs/shell-sandbox-mcp)** | Safe shell commands via pledge()+unveil() with vendored busybox |
-| **[graph-gardener](https://github.com/palimpsest-labs/graph-gardener)** | LLM-powered knowledge graph maintenance — dedup, enrichment, cleanup |
-| **[vibe-summarizer](https://github.com/palimpsest-labs/vibe-summarizer)** | LLM-powered session and transcript summarizer — provider-agnostic |
+### Search pipeline
+**unified-history-mcp** searches across every domain — sessions, transcripts, notifications, and web archives — in a single query. **fst-indexer** (Rust) builds the fast full-text indexes underneath. **web-archive-mcp** captures every web fetch and search result permanently, feeding into the same pipeline.
 
-```
-fst-indexer (Rust) ◄── unified-history-mcp ──► search sessions, transcripts, notifications, web-archive
-       │
-       ▼
-graph-gardener ──► memory graph
-       ▲
-       │
-web-archive-mcp ──► archived fetches/searches (JSONL)
-shell-sandbox-mcp ──► pledge()+unveil() sandbox
-       │
-       ▼
-   palimpsest ──► research engine
-```
+### Execution
+**shell-sandbox-mcp** provides safe command execution via pledge()+unveil() with a vendored busybox — no network, no filesystem escape, no dangerous applets.
+
+### Knowledge
+**graph-gardener** maintains the persistent memory graph. **vibe-summarizer** generates AI summaries for sessions and transcripts. **palimpsest** ties it all together as the research engine.
+
+| Repo | Layer | Role |
+|---|---|---|
+| [unified-history-mcp](https://github.com/palimpsest-labs/unified-history-mcp) | Search | Cross-domain full-text search |
+| [fst-indexer](https://github.com/palimpsest-labs/fst-indexer) | Search | Fast full-text indexer (Rust) |
+| [web-archive-mcp](https://github.com/palimpsest-labs/web-archive-mcp) | Search | Persistent web fetch/search archiving |
+| [shell-sandbox-mcp](https://github.com/palimpsest-labs/shell-sandbox-mcp) | Execution | Safe shell commands via pledge()+unveil() |
+| [graph-gardener](https://github.com/palimpsest-labs/graph-gardener) | Knowledge | Memory graph maintenance |
+| [vibe-summarizer](https://github.com/palimpsest-labs/vibe-summarizer) | Knowledge | Session/transcript summarization |
+| [palimpsest](https://github.com/palimpsest-labs/palimpsest) | Core | Research engine — orchestrates all of the above |
 
 ---
 
