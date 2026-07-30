@@ -1,6 +1,6 @@
 # Palimpsest
 
-> *Nothing is ever truly erased.*
+> *Ghost in the pages.*
 
 **Palimpsest** is an open-source intelligence fusion tool for investigative research. It gives journalists and researchers the same persistent intelligence capabilities — cross-domain search, knowledge graphs, web archiving, secure execution — that institutions have had for decades. Local-first, source-tracked, methodology-enforced.
 
