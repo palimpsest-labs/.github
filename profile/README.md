@@ -2,7 +2,7 @@
 
 > *Nothing is ever truly erased.*
 
-**Palimpsest** is an open-source investigative research engine. It combines persistent memory, unified search across communication channels, platform APIs, web research, and LLM synthesis to build dossiers from fragments.
+**Palimpsest** is an open-source intelligence fusion tool for investigative research. It gives journalists and researchers the same persistent intelligence capabilities — cross-domain search, knowledge graphs, web archiving, secure execution — that institutions have had for decades. Local-first, source-tracked, methodology-enforced.
 
 ---
 
