@@ -28,26 +28,37 @@ The tool works the same way. It searches what's visible, then reaches deeper: de
 
 ## The toolkit
 
-Seven repositories, three layers:
+Twelve repositories, six layers:
 
-### Search pipeline
-**unified-history-mcp** searches across every domain — sessions, transcripts, notifications, and web archives — in a single query. **fst-indexer** (Rust) builds the fast full-text indexes underneath. **web-archive-mcp** captures every web fetch and search result permanently, feeding into the same pipeline.
+### Core
+**palimpsest** is the research engine that orchestrates the whole stack — the case directory system, methodology gates, evidence capture, and the agent loop.
+
+### Search
+**unified-history-mcp** searches across every domain — sessions, transcripts, notifications, and web archives — in a single query. **fst-indexer** (Rust) builds the fast full-text indexes underneath.
+
+### Knowledge
+**memory-mcp** is the persistent SQLite-backed knowledge graph — graph traversal, fuzzy search, temporal queries. **memory-stats-mcp** exposes read-only graph stats and discovery. **graph-gardener** maintains the graph — deduplication, enrichment, cleanup. **vibe-summarizer** generates AI summaries for sessions and transcripts.
 
 ### Execution
 **shell-sandbox-mcp** provides safe command execution via pledge()+unveil() with a vendored busybox — no network, no filesystem escape, no dangerous applets.
 
-### Knowledge
-**graph-gardener** maintains the persistent memory graph. **vibe-summarizer** generates AI summaries for sessions and transcripts. **palimpsest** ties it all together as the research engine.
+### Web & document research (OSINT)
+**web-archive-mcp** captures every web fetch and search result permanently. **dns-whois-mcp** resolves DNS and WHOIS registration data. **image-analysis-mcp** runs OCR and extracts EXIF/metadata from images. **pdf-extract-mcp** extracts text and metadata from PDFs — all feeding the same search pipeline.
 
 | Repo | Layer | Role |
 |---|---|---|
+| [palimpsest](https://github.com/palimpsest-labs/palimpsest) | Core | Research engine — orchestrates all of the above |
 | [unified-history-mcp](https://github.com/palimpsest-labs/unified-history-mcp) | Search | Cross-domain full-text search |
 | [fst-indexer](https://github.com/palimpsest-labs/fst-indexer) | Search | Fast full-text indexer (Rust) |
-| [web-archive-mcp](https://github.com/palimpsest-labs/web-archive-mcp) | Search | Persistent web fetch/search archiving |
-| [shell-sandbox-mcp](https://github.com/palimpsest-labs/shell-sandbox-mcp) | Execution | Safe shell commands via pledge()+unveil() |
+| [memory-mcp](https://github.com/palimpsest-labs/memory-mcp) | Knowledge | Persistent SQLite knowledge graph |
+| [memory-stats-mcp](https://github.com/palimpsest-labs/memory-stats-mcp) | Knowledge | Read-only graph stats & discovery |
 | [graph-gardener](https://github.com/palimpsest-labs/graph-gardener) | Knowledge | Memory graph maintenance |
 | [vibe-summarizer](https://github.com/palimpsest-labs/vibe-summarizer) | Knowledge | Session/transcript summarization |
-| [palimpsest](https://github.com/palimpsest-labs/palimpsest) | Core | Research engine — orchestrates all of the above |
+| [shell-sandbox-mcp](https://github.com/palimpsest-labs/shell-sandbox-mcp) | Execution | Safe shell commands via pledge()+unveil() |
+| [web-archive-mcp](https://github.com/palimpsest-labs/web-archive-mcp) | OSINT | Persistent web fetch/search archiving |
+| [dns-whois-mcp](https://github.com/palimpsest-labs/dns-whois-mcp) | OSINT | DNS lookup & WHOIS registration research |
+| [image-analysis-mcp](https://github.com/palimpsest-labs/image-analysis-mcp) | OSINT | OCR & image metadata/EXIF extraction |
+| [pdf-extract-mcp](https://github.com/palimpsest-labs/pdf-extract-mcp) | OSINT | PDF text & metadata extraction |
 
 ---
 
@@ -64,6 +75,6 @@ Seven repositories, three layers:
 
 ## Status
 
-Seven repos, all functional, actively developed. The foundation is built — integration is next.
+Twelve repos, all functional, actively developed. The foundation is built — integration and the mobile companion are next.
 
 [palimpsest-labs](https://github.com/palimpsest-labs)
